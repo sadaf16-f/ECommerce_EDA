@@ -1,5 +1,8 @@
+import streamlit as st
 import pandas as pd
 import plotly.express as px
+
+st.title("EDA-Ecommerce Dataset")
 
 # Load data
 df = pd.read_csv("ecommerce_dataset.csv")
@@ -40,4 +43,3 @@ fig3.show()
 fig4 = px.histogram(df, x="payment_method", color="payment_method",
                        title="💳 Payment Method Distribution")
 fig4.show()
-
