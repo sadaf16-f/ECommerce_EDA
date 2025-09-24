@@ -20,7 +20,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("🛒 Ecommerce Data - Exploratory Data Analysis (Dark Theme)")
+st.title("🛒 Ecommerce Data - Exploratory Data Analysis ")
 
 # ===============================
 # File Upload
