@@ -59,23 +59,7 @@ if uploaded_file is not None:
                          color_continuous_scale="Tealgrn")
     st.plotly_chart(treemap, use_container_width=True)
 
-    # ===============================
-    # Bivariate Analysis
-    # ===============================
-    st.header("🔹 Bivariate / Multivariate Analysis")
-
-    # Scatter plot
-    st.subheader("Price vs Quantity (colored by Category)")
-    scatter = px.scatter(df, x="price", y="quantity", color="category", size="revenue",
-                         hover_data=["product_id"], opacity=0.7)
-    st.plotly_chart(scatter, use_container_width=True)
-
-    # Bubble chart
-    st.subheader("Revenue vs Quantity (Bubble size = Discount)")
-    bubble = px.scatter(df, x="quantity", y="revenue", size="discount", color="category",
-                        hover_name="product_id", size_max=40)
-    st.plotly_chart(bubble, use_container_width=True)
-
+    
     # ===============================
     # Time Series Analysis
     # ===============================
@@ -90,34 +74,6 @@ if uploaded_file is not None:
     ax.plot(time_df["order_date"], time_df["revenue"], label="Daily Revenue", color="teal")
     ax.plot(time_df["order_date"], time_df["rolling"], label="7-Day Rolling Avg", color="orange")
     ax.legend()
-    st.pyplot(fig)
-
-    # Calendar heatmap (Day vs Month)
-    st.subheader("Revenue by Day & Month (Heatmap)")
-    df["month"] = df["order_date"].dt.month
-    df["day"] = df["order_date"].dt.day
-    pivot = df.pivot_table(values="revenue", index="day", columns="month", aggfunc="sum")
-    fig, ax = plt.subplots(figsize=(10,6))
-    sns.heatmap(pivot, cmap="YlGnBu", ax=ax)
-    st.pyplot(fig)
-
-    # ===============================
-    # Customer/Product Insights
-    # ===============================
-    st.header("🔹 Customer & Product Insights")
-
-    # Pareto (80/20 rule)
-    st.subheader("Pareto Chart - Top Products by Revenue")
-    product_sales = df.groupby("product_id")["revenue"].sum().sort_values(ascending=False).reset_index()
-    product_sales["cum_perc"] = 100*product_sales["revenue"].cumsum()/product_sales["revenue"].sum()
-
-    fig, ax = plt.subplots(figsize=(12,5))
-    ax.bar(product_sales["product_id"], product_sales["revenue"], color="lightblue")
-    ax2 = ax.twinx()
-    ax2.plot(product_sales["product_id"], product_sales["cum_perc"], color="red", marker="D", ms=4)
-    ax.axhline(product_sales["revenue"].sum()*0.8, color="grey", linestyle="--")
-    ax2.axhline(80, color="red", linestyle="--")
-    ax.set_title("Pareto 80/20 Rule")
     st.pyplot(fig)
 
     # ===============================
